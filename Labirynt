@@ -1,0 +1,181 @@
+#include <iostream>
+
+#include <conio.h> //potrzebne do funkcji getch, ktora pozwala na sterowanie klawiszami
+
+#include <Windows.h> // potrzebne aby uspic program  na okreslony czas
+
+
+using namespace std;
+
+
+int pozycja_x = 0;
+
+int pozycja_y = 0;
+
+bool koniec = false;
+
+char ruch;
+
+char gracz = 'x';
+
+
+
+char mapa[10][20] = //tablica labiryntu
+
+{
+
+'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','@','#','#','#',
+'#',' ',' ',' ',' ',' ','#',' ',' ','#',' ',' ',' ',' ','#','#',' ','#',' ','#',
+'#',' ','#','#','#',' ',' ',' ','#','#',' ','#','#',' ','#','#',' ','#',' ','#',
+'#',' ','#','#',' ','#','#',' ',' ','#',' ','#','#',' ','#','#',' ',' ',' ','#',
+'#',' ',' ','#',' ',' ','#','#','#','#',' ','#','#',' ','#','#','#','#',' ','#',
+'#','#',' ','#','#',' ','#','#',' ',' ',' ','#','#',' ','#','#','#','#',' ','#',
+'#',' ',' ',' ',' ',' ','#','#',' ','#',' ','#','#',' ',' ',' ',' ',' ',' ','#',
+'#',' ','#',' ','#',' ','#',' ',' ','#',' ','#','#','#','#','#','#','#','#','#',
+'$',' ','#',' ','#',' ',' ',' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ','#','#',
+'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',
+
+};
+
+
+void gra();
+
+
+
+int main()
+
+{
+
+    system("cls");
+
+    int wybor;
+
+    cout << "       Labirynt      \n\n 1.Start\n 2.Wybierz gracza\n 3.Sterowanie\n 4.Wyjscie\n\n\n Wybierz opcje 1,2,3 albo 4"; //menu gry
+
+    wybor = _getch(); //nie trzeba potwierdzac enterem wyboru
+
+    switch (wybor) // wybor opcji w menu
+        
+    {
+
+    case '1': system("cls"); gra(); break;
+
+    case '2': system("cls"); cout << "Podaj znak gracza\n"; gracz = _getch(); system("cls"); main(); break;
+
+    case '3': system("cls"); cout << "g - gora,\nd - dol,\nl - lewa,\np - prawa," << endl<< "q - wyjscie" << endl << endl;
+
+        cout << "Wcisnij dowolny znak aby powrocic do menu"; _getch(); main(); // nie ma break dlatego trzba uzyc klawisza aby wyjsc
+
+    case '4': exit(1);
+
+    default: cout << "Nie ma takiej opcji"; _getch(); main();
+
+    }
+
+}
+
+
+void gra()
+
+{
+
+    pozycja_x = 0;
+
+    pozycja_y = 8;
+
+    koniec = false;
+
+    while (!koniec)
+
+    {
+
+        system("cls");
+
+        for (int y = 0; y < 10; y++)
+
+        {
+
+            for (int x = 0; x < 20; x++)
+
+            {
+
+                if (x == pozycja_x && y == pozycja_y)
+
+                {
+
+                    cout << gracz;
+
+                }
+
+                else
+
+                {
+
+                    cout << mapa[y][x];
+                    
+                }
+
+            }
+
+            cout << "\n";
+         
+        }
+
+        cout << endl<<"MUSISZ DOJSC DO @";
+        ruch = _getch();
+
+        switch (ruch) //poruszanie po labiryncie
+
+        {
+
+        case 'l': if (mapa[pozycja_y][pozycja_x - 1] == ' ' || mapa[pozycja_y][pozycja_x - 1] == '$' || mapa[pozycja_y][pozycja_x - 1] == '@')\
+
+            --pozycja_x; break;
+        case 'L': if (mapa[pozycja_y][pozycja_x - 1] == ' ' || mapa[pozycja_y][pozycja_x - 1] == '$' || mapa[pozycja_y][pozycja_x - 1] == '@')\
+
+            --pozycja_x; break;
+
+        case 'p': if (mapa[pozycja_y][pozycja_x + 1] == ' ' || mapa[pozycja_y][pozycja_x + 1] == '$' || mapa[pozycja_y][pozycja_x + 1] == '@')\
+
+            ++pozycja_x; break;
+        case 'P': if (mapa[pozycja_y][pozycja_x + 1] == ' ' || mapa[pozycja_y][pozycja_x + 1] == '$' || mapa[pozycja_y][pozycja_x + 1] == '@')\
+
+            ++pozycja_x; break;
+
+        case 'g': if (mapa[pozycja_y - 1][pozycja_x] == ' ' || mapa[pozycja_y - 1][pozycja_x] == '$' || mapa[pozycja_y - 1][pozycja_x] == '@')\
+
+            --pozycja_y; break;
+        case 'G': if (mapa[pozycja_y - 1][pozycja_x] == ' ' || mapa[pozycja_y - 1][pozycja_x] == '$' || mapa[pozycja_y - 1][pozycja_x] == '@')\
+
+            --pozycja_y; break;
+
+        case 'd': if (mapa[pozycja_y + 1][pozycja_x] == ' ' || mapa[pozycja_y + 1][pozycja_x] == '$' || mapa[pozycja_y + 1][pozycja_x] == '@')\
+
+            ++pozycja_y; break;
+        case 'D': if (mapa[pozycja_y + 1][pozycja_x] == ' ' || mapa[pozycja_y + 1][pozycja_x] == '$' || mapa[pozycja_y + 1][pozycja_x] == '@')\
+
+            ++pozycja_y; break;
+
+
+        case 'q': main(); break;
+        case 'Q': main(); break;
+
+        }
+
+        if (mapa[pozycja_y][pozycja_x] == '@')
+
+        {
+
+            koniec = true;
+            system("cls");
+            cout << "Gratulaje! Udalo Ci sie!" << endl;
+            Sleep(3000); //uspienie na 3 sek
+
+        }
+
+    }
+
+
+    main();
+
+}
